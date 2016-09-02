@@ -1,8 +1,26 @@
 #!/usr/bin/python3
 import os
+import re
 import argparse
 
-def parse():
+
+class NotAValidUrl(Exception):
+
+    def __init__(self, url):
+        self.url = url
+
+    def __str__(self):
+        return "'" + url + "' does not appear to be a valid YouTube URL"
+
+def is_yt_url(url):
+    regex = 'https?://(www\.)?((youtu\.be)|(youtube\.(\w{2,3})))/.*'
+    return re.fullmatch(regex, url) is not None
+
+
+def parse_cli():
+    """
+    Parse CLI args
+    """
     _base_dir = os.path.expanduser('~/Music/youtube_mp3/')
     try:
         _config_path = os.path.abspath(os.getenv('XDG_CONFIG_HOME'))
@@ -16,9 +34,21 @@ def parse():
     argparser.add_argument('--config', default=_config_path, dest='config_path', help='The config file location. Defaults to \'' + _config_path + '\'.')
 
     args = argparser.parse_args()
-    if not os.path.exists(args.config_path):
-        raise FileNotFoundError(args.config_path)
+    return args.base_dir, args.config_path
+
+
+def parse_config(config_path):
+    """
+    Parse config file URLs
+    """
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(config_path)
+
+
+def parse():
+    base_dir, config_path = parse_cli()
+    re.lk
 
 
 if __name__ == '__main__':
-    parse()
+    parse_cli()
