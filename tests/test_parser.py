@@ -17,7 +17,7 @@ class TestParser(unittest.TestCase):
         self.urls = [
             'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'https://www.youtube.com/playlist?list=PLjqNIb_ZU6K8Jh_Q01s4qXPV6n9Y1a-JW',
-            'https://youtu.be/oHg5SJYRHA0'
+            'https://www.youtube.com/watch?v=eYuUAGXN0KM'
         ]
         with open(self.config, 'w') as f:
             for url in self.urls:
@@ -36,12 +36,12 @@ class TestParser(unittest.TestCase):
             'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'http://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'https://youtube.com/watch?v=dQw4w9WgXcQ',
-            'https://youtu.be/dQw4w9WgXcQ',
             'https://www.youtube.fr/watch?v=dQw4w9WgXcQ',
             'https://www.youtube.com/results?search_query=rickroll',
             'https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PLtn57NsUdLz7Phy4bzX0f3d5_eAQQ7FCA',
         ]
         bad_urls = [
+            'https://youtu.be/dQw4w9WgXcQ',
             'https://www.yutube.com/watch?v=dQw4w9WgXcQ',
             'htps://www.youtube.com/watch?v=dQw4w9WgXcQ',
             'https:/www.youtube.com/watch?v=dQw4w9WgXcQ',

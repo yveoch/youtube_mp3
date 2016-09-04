@@ -42,7 +42,7 @@ def create_track_objects(url, dir):
             dir = os.path.join(dir, info['title'])
             for entry in info['entries']:
                 if entry is not None:
-                    tracks.append(Track('http://youtu.be/' + entry['id'], dir))
+                    tracks.append(Track('https://www.youtube.com/watch?v=' + entry['id'], dir))
         return tracks
 
 

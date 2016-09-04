@@ -21,7 +21,7 @@ class NotAValidUrl(Exception):
 
 
 def is_yt_url(url):
-    regex = 'https?://(www\.)?((youtu\.be)|(youtube\.(\w{2,3})))/.*'
+    regex = 'https?://(www\.)?youtube\.(\w{2,3})/.*'
     return re.fullmatch(regex, url) is not None
 
 
