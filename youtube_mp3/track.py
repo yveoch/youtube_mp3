@@ -4,6 +4,8 @@ import logging
 import requests
 from youtube_dl import YoutubeDL
 
+logger = logging.getLogger('youtube_mp3')
+
 
 class TrackNotFound(Exception):
 
@@ -11,7 +13,10 @@ class TrackNotFound(Exception):
         self.url = url
 
     def __repr__(self):
-        return "'" + url + "' could not be found"
+        return self.url
+
+    def __str__(self):
+        return "'" + self.url + "' could not be found"
 
 
 def get_youtubeinmp3_url(video_url):
@@ -33,7 +38,7 @@ def create_track_objects(url, dir):
             info = ydl.extract_info(url, download=False)
             if not info:
                 raise TrackNotFound(url)
-            logging.info("Playlist: %s", info['title'])
+            logger.info("Playlist: %s", info['title'])
             dir = os.path.join(dir, info['title'])
             for entry in info['entries']:
                 if entry is not None:
@@ -56,7 +61,7 @@ class Track:
             self.link = res.json()['link']
             self.title = res.json()['title']
             self.path = os.path.join(dir, self.title + '.mp3')
-            logging.info("Track: %s", self.title)
+            logger.info("Track: %s", self.title)
         except (requests.exceptions.HTTPError, KeyError):
             raise TrackNotFound(url) from None
 
@@ -71,9 +76,9 @@ class Track:
         Sync the online video to the local audio file.
         """
         if not self.is_already_there():
-            logging.info("Downloading...")
+            logger.info("Downloading...")
             res = requests.get(self.link)
             res.raise_for_status() # should be ok though
             with open(self.path, 'wb') as f:
                 f.write(res.content)
-        logging.info("OK")
+        logger.info("OK")

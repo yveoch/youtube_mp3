@@ -5,26 +5,32 @@ import parser
 import track
 
 
-def main():
-    logging.basicConfig(format='%(message)s', level=logging.INFO)
+logger = logging.getLogger('youtube_mp3')
+logformatter = logging.Formatter('%(levelname)s %(name)s %(message)s')
+loghandler = logging.StreamHandler(stream=sys.stdout)
+loghandler.setLevel(logging.INFO)
+loghandler.setFormatter(logformatter)
+logger.addHandler(loghandler)
 
+
+def main():
     try:
         dir, urls = parser.parse()
     except (FileNotFoundError, NotAValidUrl) as e:
-        logging.critical(e)
+        logger.critical(e)
         exit(1)
 
     for u in urls:
         try:
             tracks = track.create_track_objects(u, dir)
         except track.TrackNotFound as e: # playlist not found
-            logging.error(e)
+            logger.error(e)
             continue
         for t in tracks:
             try:
                 t.sync()
             except track.TrackNotFound as e: # track not found
-                logging.error(e)
+                logger.error(e)
                 continue
 
 

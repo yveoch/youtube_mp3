@@ -14,7 +14,10 @@ class NotAValidUrl(Exception):
         self.url = url
 
     def __repr__(self):
-        return "'" + url + "' does not appear to be a valid YouTube URL"
+        return self.url
+
+    def __str__(self):
+        return "'" + self.url + "' does not appear to be a valid YouTube URL"
 
 
 def is_yt_url(url):
