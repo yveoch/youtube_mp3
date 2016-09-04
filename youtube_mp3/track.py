@@ -11,7 +11,7 @@ class TrackNotFound(Exception):
         self.url = url
 
     def __repr__(self):
-        return "'" + url + "' couldn't be downloaded"
+        return "'" + url + "' could not be found"
 
 
 def get_youtubeinmp3_url(video_url):

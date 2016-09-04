@@ -26,8 +26,8 @@ def parse_cli():
     """
     Parse CLI args
     """
-    argparser = argparse.ArgumentParser(description='Syncs YouTube videos and playlists to local mp3 files.')
-    argparser.add_argument('-d', '--directory', default=os.get_cwd(), help='Target directory, defaults to ./')
+    argparser = argparse.ArgumentParser(description="Syncs YouTube videos and playlists to local mp3 files. The target directory must contain a '" + _CONFIG_FILENAME + "' file with one url per line.")
+    argparser.add_argument('-d', dest='directory', default=os.getcwd(), help="Target directory, defaults to ./")
 
     args = argparser.parse_args()
     return args.directory
@@ -41,7 +41,7 @@ def parse_config(dir):
     if not os.path.isdir(dir):
         raise FileNotFoundError("No such directory: " + dir)
     if not os.path.exists(config):
-        raise FileNotFoundError("Could not find a " + _CONFIG_FILENAME + " in " + dir)
+        raise FileNotFoundError("Could not find a '" + _CONFIG_FILENAME + "' file in " + dir)
     urls = []
     with open(config) as f:
         for line in f.readlines():
