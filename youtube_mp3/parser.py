@@ -13,7 +13,7 @@ class NotAValidUrl(Exception):
     def __init__(self, url):
         self.url = url
 
-    def __str__(self):
+    def __repr__(self):
         return "'" + url + "' does not appear to be a valid YouTube URL"
 
 
