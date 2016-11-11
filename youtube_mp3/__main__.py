@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 import sys
 import logging
-import parser
-import track
+from . import parser
+from . import track
 
 
 logger = logging.getLogger('youtube_mp3')
@@ -16,7 +16,7 @@ logger.addHandler(loghandler)
 def main():
     try:
         dir, urls = parser.parse()
-    except (FileNotFoundError, NotAValidUrl) as e:
+    except (FileNotFoundError, parser.NotAValidUrl) as e:
         logger.critical(e)
         exit(1)
 
